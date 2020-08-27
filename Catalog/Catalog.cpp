@@ -5,6 +5,7 @@
 #include <Windows.h>
 using namespace std;
 #define PATH "..\\Catalog\\info.txt"
+
 class Book
 {
 	size_t code;
@@ -12,6 +13,7 @@ class Book
 	string author;
 	size_t year;
 public:
+
 	Book(size_t _code, string _name, string _author, size_t _year):
 		   code(_code), name(_name), author(_author), year(_year)
 	{
@@ -20,38 +22,46 @@ public:
 		if (_author == _a) author = "Empty!";
 	}
 	
+
 	bool set_name(string _name)
 	{
 		name = _name;
 		return true;
 	}
+
 	bool set_author(string _author)
 	{
 		author = _author;
 		return true;
 	}
+
 	bool set_year(size_t _year)
 	{
 		year = _year;
 		return true;
 	}
 
+
 	size_t get_code()const
 	{
 		return code;
 	}
+
 	string get_name()const
 	{
 		return name;
 	}
+
 	string get_author()const
 	{
 		return author;
 	}
+
 	size_t get_year()const
 	{
 		return year;
 	}
+
 
 	void show_book()
 	{
@@ -60,6 +70,7 @@ public:
 			 << "\nAuthor: " << get_author()
 			 << "\nYear:   " << get_year() << "\n\n";
 	}
+
 
 	void change_book(string _name, string _author, size_t _year)
 	{
@@ -70,12 +81,13 @@ public:
 
 
 
-
 };
 
 
 class Catalog_books {
+
 	vector<Book> arr;
+
 public:
 	Catalog_books()
 	{
@@ -109,6 +121,7 @@ public:
 		f.close();
 	}
 	
+
 	~Catalog_books()
 	{
 		fstream f;
@@ -119,11 +132,13 @@ public:
 		}
 	}
 
+
 	Book& operator[] (int ind)
 	{
 		return arr.at(ind);
 	}
 	
+
 	size_t code_code()const
 	{
 		if (arr.size())
@@ -131,11 +146,6 @@ public:
 		else return 1110;
 	}
 
-	bool add_book(const Book& obj)
-	{
-		arr.push_back(obj);
-		return true;
-	}
 
 	int find_code(int _code)const
 	{
@@ -144,6 +154,7 @@ public:
 
 		return -1;
 	}
+
 	int find_name(string _name)const
 	{
 		for (size_t i = 0; i < arr.size(); i++)
@@ -151,6 +162,7 @@ public:
 
 		return -1;
 	}
+
 	int find_author(string _author)const
 	{
 		for (size_t i = 0; i < arr.size(); i++)
@@ -158,6 +170,7 @@ public:
 
 		return -1;
 	}
+
 	int find_year(size_t _year)const
 	{
 		for (size_t i = 0; i < arr.size(); i++)
@@ -165,6 +178,14 @@ public:
 
 		return -1;
 	}
+
+
+	bool add_book(const Book& obj)
+	{
+		arr.push_back(obj);
+		return true;
+	}
+
 
 	bool del_book(size_t code)
 	{
@@ -179,6 +200,7 @@ public:
 		return false;
 	}
 
+
 	bool change_book(size_t _code, string _name, string _author, size_t _year)
 	{
 
@@ -190,6 +212,7 @@ public:
 		arr[ind].set_year(_year);
 		return true;
 	}
+
 
 	void all_books()const
 	{
@@ -204,6 +227,8 @@ public:
 		}
 		else cout << "\nEmpty catalog";
 	}
+
+
 };
 
 int main()
@@ -223,6 +248,8 @@ int main()
 4 - Delete selected book\n\
 5 - Search for some book\n\
        0 - Exit\n\n";
+
+
 		cin >> q;
 		switch (q)
 		{
@@ -232,14 +259,19 @@ int main()
 
 		case'2':
 			cout << "Enter the book's Name: ";
+
 			getchar();
 			getline(cin, cin_name);
+
 			cout << "Enter the book's Author: ";
 			getline(cin, cin_author);
+
 			cout << "Enter the book's Year: ";
 			cin >> cin_year;
 			while (cin_year < 1 || cin_year > 2050) { cout << "Wrong year!!!\nTry again\n"; cin >> cin_year; }
+
 			cout << "Book added.\n";
+
 			c.add_book(Book(main_code++, cin_name, cin_author, cin_year));
 			break;
 
@@ -247,14 +279,18 @@ int main()
 		case'3':
 			cout << "Enter the book's Code: ";
 			cin >> cin_code;
+
 			cout << "Enter the book's Name: ";
 			getchar();
 			getline(cin, cin_name);
+
 			cout << "Enter the book's Author: ";
 			getline(cin, cin_author);
+
 			cout << "Enter the book's Year: ";
 			cin >> cin_year;
 			while (cin_year < 1 || cin_year > 2050) { cout << "Wrong year!!!\nTry again\n"; cin >> cin_year; }
+
 			cout << "Book has changed.\n";
 			c[c.find_code(cin_code)].change_book(cin_name, cin_author, cin_year); break;
 
@@ -263,6 +299,7 @@ int main()
 			cout << "Enter code of the book: ";
 			cin >> cin_code;
 			if (c.find_code(cin_code) == -1) { cout << "\nWrong Code!\n"; break; }
+
 			c.del_book(cin_code);
 			cout << "Book has been deleted.\n";
 			break;
@@ -281,6 +318,7 @@ int main()
 			switch (q)
 			{
 
+
 			case'1':
 				cout << "Enter the Code\n";
 				cin >> cin_code;
@@ -296,6 +334,7 @@ Here's your book\n\
 				cout << "Enter the Name\n";
 				cin >> cin_name;
 				if (c.find_name(cin_name) == -1) { cout << "\nWrong Name!\n"; break; }
+
 				cout << "\n\
 Here's your book\n\
       ↓\n";
@@ -306,6 +345,7 @@ Here's your book\n\
 				cout << "Enter the Author\n";
 				cin >> cin_author;
 				if (c.find_author(cin_author) == -1) { cout << "\nWrong Author!\n"; break; }
+
 				cout << "\n\
 Here's your book\n\
       ↓\n";
@@ -316,6 +356,7 @@ Here's your book\n\
 				cout << "Enter the Year\n";
 				cin >> cin_year;
 				if (c.find_year(cin_year) == -1) { cout << "\nWrong Year!\n"; break; }
+
 				cout << "\n\
 Here's your book\n\
       ↓\n";

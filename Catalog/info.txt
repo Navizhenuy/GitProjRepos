@@ -1,5 +1,5 @@
-1111|1 book|1 author|1234|
-1112|2 book|2 author|5421|
-1113|3 book|3 author|1905|
-1114|4 book|4 author|1509|
-1115|qweqwe qwe|mamama|1523|
+1111|Don Quixote|Miguel de Cervantes|2018|
+1112|Alices adventures in wonderland|Lewis Carroll; Robert Ingpen|2017|
+1113|The annotated Huckleberry Finn : Adventures of Huckleberry Finn (Tom Sawyer's comrade)|New York : Norton|2001|
+1114|The adventures of Tom Sawyer|Mark Twain; Scott McKowen|2004|
+1115|Moby Dick|Herman Melville; Joseph Ciardiello; Thomas J Fleming|1989|
