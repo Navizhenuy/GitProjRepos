@@ -12,13 +12,17 @@ class Book
 	string author;
 	size_t year;
 public:
-	Book(size_t _code, string _name, string _author, size_t _year) : code(_code), name(_name), author(_author), year(_year)
+	Book(size_t _code, string _name, string _author, size_t _year):
+		   code(_code), name(_name), author(_author), year(_year)
 	{
 		string _n = "\0", _a = "\0";
 		if (_name == _n) name = "Empty!";
 		if (_author == _a) author = "Empty!";
 	}
-
+	void init()
+	{
+		
+	}
 	bool set_name(string _name)
 	{
 		name = _name;
@@ -57,9 +61,9 @@ public:
 	void show_book()
 	{
 		cout << "\nCode:   " << get_code()
-			<< "\nName:   " << get_name()
-			<< "\nAuthor: " << get_author()
-			<< "\nYear:   " << get_year() << "\n\n";
+			 << "\nName:   " << get_name()
+			 << "\nAuthor: " << get_author()
+			 << "\nYear:   " << get_year() << "\n\n";
 	}
 
 	void change_book(string _name, string _author, size_t _year)
@@ -78,20 +82,57 @@ public:
 class Catalog_books {
 	vector<Book> arr;
 public:
-
 	Catalog_books()
 	{
 		fstream f;
-		f.open(PATH);
-		if (!(f.is_open())) cout << "Error opening file!!!\n";
+		f.open(PATH, fstream::in);
+		if (!(f.is_open()))  cout << "Error opening file!!!\n";
+		string co, na, au, ye, str;
+		size_t code_int, year_int;
+		while (!f.eof())
+		{
+			getline(f, str);
+			if (str == "\0") break;
+			co = str.substr(0, str.find_first_of('|'));
+			str.erase(0, str.find_first_of('|')+1);
 
+			na = str.substr(0, str.find_first_of('|'));
+			str.erase(0, str.find_first_of('|')+1);
+
+			au = str.substr(0, str.find_first_of('|'));
+			str.erase(0, str.find_first_of('|')+1);
+
+			ye = str.substr(0, str.find_first_of('|'));
+			str.empty();
+
+			code_int = stoi(co);
+			year_int = stoi(ye);
+
+			add_book((Book (code_int, na, au, year_int) ));
+			
+		}
 		f.close();
 	}
-
+	size_t code_code()
+	{
+		if(arr.size())
+			return arr[arr.size() - 1].get_code();
+		else return -1;
+	}
+	~Catalog_books()
+	{
+		fstream f;
+		f.open(PATH, fstream::out);
+		for (size_t i = 0; i < arr.size(); i++)
+		{
+			f  << arr[i].get_code() << "|" << arr[i].get_name() << "|" << arr[i].get_author() << "|" << arr[i].get_year() << "|\n";
+		}
+	}
 	Book& operator[] (int ind)
 	{
 		return arr.at(ind);
 	}
+	
 
 	bool add_book(const Book& obj)
 	{
@@ -155,30 +196,25 @@ public:
 
 	void all_books()
 	{
-		for (size_t i = 0; i < arr.size(); i++)
-			cout << "\nCode:   " << arr[i].get_code()
-			<< "\nName:   " << arr[i].get_name()
-			<< "\nAuthor: " << arr[i].get_author()
-			<< "\nYear:   " << arr[i].get_year() << "\n\n";
-
+		if (arr.size())
+		{
+			for (size_t i = 0; i < arr.size(); i++)
+				cout << "\nCode:   " << arr[i].get_code()
+				<< "\nName:   " << arr[i].get_name()
+				<< "\nAuthor: " << arr[i].get_author()
+				<< "\nYear:   " << arr[i].get_year() << "\n\n";
+		}
+		else cout << "\nEmpty catalog";
 	}
 };
-/// edit
-// new book;
-// Catalog_books.add_book(initbook(book))
-/// initbook
-// cin >>
+
 int main()
 {
 	Catalog_books c;
-
 	char q = 'q';
-	size_t main_code = 1111, cin_year, cin_code;
+	size_t main_code = (c.code_code() + 1), cin_year, cin_code;
+	if (main_code == 0) main_code = 1111;
 	string cin_name, cin_author;
-
-	c.add_book(Book(main_code++, "1 book ", "1 author", 1905));
-	c.add_book(Book(main_code++, "2 book", "2 author", 1723));
-	c.add_book(Book(main_code++, "3 book ", "3 author", 1623));
 
 	cout << "You're welcome in book catalog.\n";
 	while (q != '0')
@@ -301,9 +337,5 @@ Here's your book\n\
 
 		}
 	}
-	/*
-Дан каталог книг. Про книгу  известно: уникальный       номер, автор, название, год издания.
-Реализовать CRUD, показ всех книг на экран и поиск
-по каждому из полей. Сделать меню для работы с каталогом.
-														create read update delete */
+	
 }
