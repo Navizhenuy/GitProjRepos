@@ -222,10 +222,9 @@ int main()
 		cout << "\n\n\
 1 - See all the books\n\
 2 - Add new book\n\
-3 - Read selected book\n\
-4 - Change selected book\n\
-5 - Delete selected book\n\
-6 - Search for some book\n\
+3 - Change selected book\n\
+4 - Delete selected book\n\
+5 - Search for some book\n\
        0 - Exit\n\n";
 		cin >> q;
 		switch (q)
@@ -248,10 +247,6 @@ int main()
 
 
 		case'3':
-			//b.read_book();   break;
-
-
-		case'4':
 			cout << "Enter the book's Code: ";
 			cin >> cin_code;
 			cout << "Enter the book's Name: ";
@@ -265,7 +260,7 @@ int main()
 			c[c.find_code(cin_code)].change_book(cin_name, cin_author, cin_year); break;
 
 
-		case'5':
+		case'4':
 			cout << "Enter code of the book: ";
 			cin >> cin_code;
 			c.del_book(cin_code);
@@ -273,7 +268,7 @@ int main()
 			break;
 
 
-		case'6':
+		case'5':
 			cout << "\
 1 - Search with Code\n\
 2 - Search with Name\n\
