@@ -19,10 +19,7 @@ public:
 		if (_name == _n) name = "Empty!";
 		if (_author == _a) author = "Empty!";
 	}
-	void init()
-	{
-		
-	}
+	
 	bool set_name(string _name)
 	{
 		name = _name;
@@ -55,8 +52,6 @@ public:
 	{
 		return year;
 	}
-
-
 
 	void show_book()
 	{
@@ -113,12 +108,7 @@ public:
 		}
 		f.close();
 	}
-	size_t code_code()
-	{
-		if(arr.size())
-			return arr[arr.size() - 1].get_code();
-		else return -1;
-	}
+	
 	~Catalog_books()
 	{
 		fstream f;
@@ -128,11 +118,18 @@ public:
 			f  << arr[i].get_code() << "|" << arr[i].get_name() << "|" << arr[i].get_author() << "|" << arr[i].get_year() << "|\n";
 		}
 	}
+
 	Book& operator[] (int ind)
 	{
 		return arr.at(ind);
 	}
 	
+	size_t code_code()const
+	{
+		if (arr.size())
+			return arr[arr.size() - 1].get_code();
+		else return 1110;
+	}
 
 	bool add_book(const Book& obj)
 	{
@@ -194,10 +191,11 @@ public:
 		return true;
 	}
 
-	void all_books()
+	void all_books()const
 	{
 		if (arr.size())
 		{
+			
 			for (size_t i = 0; i < arr.size(); i++)
 				cout << "\nCode:   " << arr[i].get_code()
 				<< "\nName:   " << arr[i].get_name()
@@ -213,7 +211,6 @@ int main()
 	Catalog_books c;
 	char q = 'q';
 	size_t main_code = (c.code_code() + 1), cin_year, cin_code;
-	if (main_code == 0) main_code = 1111;
 	string cin_name, cin_author;
 
 	cout << "You're welcome in book catalog.\n";
@@ -241,6 +238,7 @@ int main()
 			getline(cin, cin_author);
 			cout << "Enter the book's Year: ";
 			cin >> cin_year;
+			while (cin_year < 1 || cin_year > 2050) { cout << "Wrong year!!!\nTry again\n"; cin >> cin_year; }
 			cout << "Book added.\n";
 			c.add_book(Book(main_code++, cin_name, cin_author, cin_year));
 			break;
@@ -256,6 +254,7 @@ int main()
 			getline(cin, cin_author);
 			cout << "Enter the book's Year: ";
 			cin >> cin_year;
+			while (cin_year < 1 || cin_year > 2050) { cout << "Wrong year!!!\nTry again\n"; cin >> cin_year; }
 			cout << "Book has changed.\n";
 			c[c.find_code(cin_code)].change_book(cin_name, cin_author, cin_year); break;
 
@@ -263,6 +262,7 @@ int main()
 		case'4':
 			cout << "Enter code of the book: ";
 			cin >> cin_code;
+			if (c.find_code(cin_code) == -1) { cout << "\nWrong Code!\n"; break; }
 			c.del_book(cin_code);
 			cout << "Book has been deleted.\n";
 			break;
@@ -275,8 +275,9 @@ int main()
 3 - Search with Author\n\
 4 - Search with Year\n\
         0 - Exit\n\n";
-			cin >> q;
 
+
+			cin >> q;
 			switch (q)
 			{
 
@@ -327,7 +328,8 @@ Here's your book\n\
 
 			}
 
-
+		case'0': break;
+		default: cout << "Unknown command!\n\n"; break;
 
 
 		}
